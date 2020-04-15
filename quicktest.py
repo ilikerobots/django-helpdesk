@@ -82,6 +82,7 @@ class QuickDjangoTest(object):
             MIDDLEWARE=self.MIDDLEWARE,
             ROOT_URLCONF='helpdesk.tests.urls',
             STATIC_URL='/static/',
+            TIME_ZONE='America/Chicago',
             TEMPLATES=self.TEMPLATES
         )
 
