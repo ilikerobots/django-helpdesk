@@ -16,6 +16,7 @@ install:
     - pip list
 
 before_script:
+    - export TZ=America/Chicago
     - "pycodestyle --exclude=migrations --ignore=E501,W503,W504 helpdesk"
 
 script:
