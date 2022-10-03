@@ -136,24 +136,29 @@ def process_attachments(followup, attached_files):
 
         if attached.size:
             from helpdesk.models import FollowUpAttachment
+            from django.core.exceptions import ValidationError
 
             filename = smart_str(attached.name)
-            att = FollowUpAttachment(
-                followup=followup,
-                file=attached,
-                filename=filename,
-                mime_type=attached.content_type or
-                mimetypes.guess_type(filename, strict=False)[0] or
-                'application/octet-stream',
-                size=attached.size,
-            )
-            att.full_clean()
-            att.save()
+            try:
+                att = FollowUpAttachment(
+                    followup=followup,
+                    file=attached,
+                    filename=filename,
+                    mime_type=attached.content_type or
+                    mimetypes.guess_type(filename, strict=False)[0] or
+                    'application/octet-stream',
+                    size=attached.size,
+                )
+                att.full_clean()
+                att.save()
 
-            if attached.size < max_email_attachment_size:
-                # Only files smaller than 512kb (or as defined in
-                # settings.HELPDESK_MAX_EMAIL_ATTACHMENT_SIZE) are sent via email.
-                attachments.append([filename, att.file])
+                if attached.size < max_email_attachment_size:
+                    # Only files smaller than 512kb (or as defined in
+                    # settings.HELPDESK_MAX_EMAIL_ATTACHMENT_SIZE) are sent via email.
+                    attachments.append([filename, att.file])
+            except ValidationError:
+                pass
+
 
     return attachments
 
