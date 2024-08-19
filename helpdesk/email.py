@@ -6,7 +6,7 @@ See LICENSE for details.
 """
 
 # import base64
-from bs4 import BeautifulSoup
+import html2text
 from datetime import timedelta
 from django.conf import settings as django_settings
 from django.contrib.auth import get_user_model
@@ -729,16 +729,14 @@ def get_email_body_from_part_payload(part) -> str:
 
 
 def attempt_body_extract_from_html(message: str) -> str:
-    mail = BeautifulSoup(str(message), "html.parser")
-    beautiful_body = mail.find('body')
+    h2t = html2text.HTML2Text()
+    h2t.ignore_links = True
+    beautiful_body_text = h2t.handle(str(message))
     body = None
     full_body = None
-    if beautiful_body:
-        try:
-            body = beautiful_body.text
-            full_body = body
-        except AttributeError:
-            pass
+    if beautiful_body_text:
+        body = beautiful_body_text
+        full_body = body
     if not body:
         body = ""
     return body, full_body
