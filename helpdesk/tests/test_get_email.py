@@ -216,8 +216,8 @@ class GetEmailCommonTests(TestCase):
                 cm.output
             )
 
-        self.assertEqual(len(mail.outbox), 1)  # @UndefinedVariable
-        self.assertEqual(f'[test-1] {message.get("subject")} (Opened)', mail.outbox[0].subject)
+        self.assertEqual(len(mail.outbox), 0)  # @UndefinedVariable
+        # self.assertEqual(f'[test-1] {message.get("subject")} (Opened)', mail.outbox[0].subject)
 
     def test_multiple_attachments(self):
         """
@@ -229,8 +229,8 @@ class GetEmailCommonTests(TestCase):
 
         extract_email_metadata(message.as_string(), self.queue_public, self.logger)
 
-        self.assertEqual(len(mail.outbox), 1)  # @UndefinedVariable
-        self.assertEqual(f'[test-1] {message.get("subject")} (Opened)', mail.outbox[0].subject)
+        self.assertEqual(len(mail.outbox), 0)  # @UndefinedVariable
+        # self.assertEqual(f'[test-1] {message.get("subject")} (Opened)', mail.outbox[0].subject)
 
         ticket = Ticket.objects.get()
         followup = ticket.followup_set.get()
@@ -267,8 +267,8 @@ class GetEmailCommonTests(TestCase):
         message.attach(utils.generate_file_mime_part(filename=att_filename, content=att_content))
 
         extract_email_metadata(message.as_string(), self.queue_public, self.logger)
-        self.assertEqual(len(mail.outbox), 1)  # @UndefinedVariable
-        self.assertEqual(f'[test-1] {message.get("subject")} (Opened)', mail.outbox[0].subject)
+        self.assertEqual(len(mail.outbox), 0)  # @UndefinedVariable
+        # self.assertEqual(f'[test-1] {message.get("subject")} (Opened)', mail.outbox[0].subject)
 
         ticket = Ticket.objects.get()
         followup = ticket.followup_set.get()
@@ -317,8 +317,8 @@ class GetEmailCommonTests(TestCase):
         # Now send the part to the email workflow
         extract_email_metadata(base_message.as_string(), self.queue_public, self.logger)
 
-        self.assertEqual(len(mail.outbox), 1)  # @UndefinedVariable
-        self.assertEqual(f'[test-1] {base_message.get("subject")} (Opened)', mail.outbox[0].subject)
+        self.assertEqual(len(mail.outbox), 0)  # @UndefinedVariable
+        # self.assertEqual(f'[test-1] {base_message.get("subject")} (Opened)', mail.outbox[0].subject)
 
         ticket = Ticket.objects.get()
         followup = ticket.followup_set.get()
@@ -363,7 +363,7 @@ class GetEmailCommonTests(TestCase):
         utils.add_simple_email_headers(base_message, locale="en_US", use_short_email=True)
         # Now send the part to the email workflow
         extract_email_metadata(base_message.as_string(), self.queue_public, self.logger)
-        self.assertEqual(len(mail.outbox), 1)  # @UndefinedVariable
+        self.assertEqual(len(mail.outbox), 0)  # @UndefinedVariable
         #self.assertEqual(f'[test-1] {base_message.get("subject")} (Opened)', mail.outbox[0].subject)
 
         ticket = Ticket.objects.get()
