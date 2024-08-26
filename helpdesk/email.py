@@ -639,7 +639,8 @@ def send_info_email(message_id: str, f: FollowUp, ticket: Ticket, context: dict,
     }
     if new:
         ticket.send(
-            {'submitter': ('newticket_submitter', context),
+            {
+             'submitter': ('newticket_submitter', context),
              'new_ticket_cc': ('newticket_cc', context),
              'ticket_cc': ('newticket_cc', context)},
             fail_silently=True,
@@ -648,7 +649,8 @@ def send_info_email(message_id: str, f: FollowUp, ticket: Ticket, context: dict,
     else:
         context.update(comment=f.comment)
         ticket.send(
-            {'submitter': ('updated_submitter', context),
+            {
+             # 'submitter': ('updated_submitter', context),
              'assigned_to': ('updated_owner', context)},
             fail_silently=True,
             extra_headers=extra_headers,
