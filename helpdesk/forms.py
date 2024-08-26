@@ -378,9 +378,11 @@ class AbstractTicketForm(CustomFieldMixin, forms.Form):
         context = safe_template_context(ticket)
         context['comment'] = followup.comment
 
-        roles = {'submitter': ('newticket_submitter', context),
+        roles = {
+            # 'submitter': ('newticket_submitter', context),
                  'new_ticket_cc': ('newticket_cc', context),
-                 'ticket_cc': ('newticket_cc', context)}
+                 'ticket_cc': ('newticket_cc', context)
+        }
         if ticket.assigned_to and ticket.assigned_to.usersettings_helpdesk.email_on_ticket_assign:
             roles['assigned_to'] = ('assigned_owner', context)
         ticket.send(
