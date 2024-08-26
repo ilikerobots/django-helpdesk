@@ -544,10 +544,10 @@ class EmailInteractionsTestCase(TestCase):
             self.assertTrue(ticket_cc.email, cc_email)
 
         # As an update was made, we increase the expected_email_count with:
-        # submitter: +1
+        # submitter: +0 (disabled)
         # cc_list: +2
         # public_update_queue: +1
-        expected_email_count += 1 + 2 + 1
+        expected_email_count += 0 + 2 + 1
         self.assertEqual(expected_email_count, len(mail.outbox))
 
         # As we have created a FollowUp from an email, we notify:
@@ -637,8 +637,8 @@ class EmailInteractionsTestCase(TestCase):
 
         # As an update was made, we increase the expected_email_count with:
         # public_update_queue: +1
-        # since the submitter and the two ccs each get an email
-        expected_email_count += 1 + 3
+        # since the two ccs each get an email
+        expected_email_count += 0 + 3
         self.assertEqual(expected_email_count, len(mail.outbox))
 
         # As we have created a FollowUp from an email, we notify the sender
@@ -922,10 +922,10 @@ class EmailInteractionsTestCase(TestCase):
         self.assertEqual(ticket.ticket_for_url, "mq1-%s" % ticket.id)
 
         # As an update was made, we increase the expected_email_count with:
-        # submitter: +1
+        # submitter: +0 (disabled)
         # a new email to all TicketCC subscribers : +2
         # public_update_queue: +1
-        expected_email_count += 1 + 2 + 1
+        expected_email_count += 0 + 2 + 1
         self.assertEqual(expected_email_count, len(mail.outbox))
 
         # Ensure that <TicketCC> exist
@@ -1008,8 +1008,8 @@ class EmailInteractionsTestCase(TestCase):
         self.assertEqual(ticket.ticket_for_url, "mq2-%s" % ticket.id)
 
         # As an update was made, we increase the expected_email_count with:
-        # public_update_queue: +1
-        expected_email_count += 1
+        # public_update_queue: +0 (disabled)
+        expected_email_count += 0
         self.assertEqual(expected_email_count, len(mail.outbox))
 
     def test_create_followup_from_email_with_valid_message_id_with_expected_cc(self):
@@ -1075,10 +1075,10 @@ class EmailInteractionsTestCase(TestCase):
         expected_email_count = 1 + 2
 
         # As an update was made, we increase the expected_email_count with:
-        # submitter: +1
+        # submitter: +0 (disabled)
         # cc_list: +2
         # public_update_queue: +1
-        expected_email_count += 1 + 2 + 1
+        expected_email_count += 0 + 2 + 1
         self.assertEqual(expected_email_count, len(mail.outbox))
 
     def test_ticket_field_autofill(self):
