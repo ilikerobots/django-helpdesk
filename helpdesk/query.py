@@ -58,11 +58,12 @@ DATATABLES_ORDER_COLUMN_CHOICES = Choices(
     ('3', 'queue'),
     ('4', 'status'),
     ('5', 'created'),
-    ('6', 'due_date'),
-    ('7', 'assigned_to'),
-    ('8', 'submitter_email'),
-    # ('9', 'time_spent'),
-    ('10', 'kbitem'),
+    ('6', 'modified'),
+    ('7', 'due_date'),
+    ('8', 'assigned_to'),
+    ('9', 'submitter_email'),
+    # ('10', 'time_spent'),
+    ('11', 'kbitem'),
 )
 
 

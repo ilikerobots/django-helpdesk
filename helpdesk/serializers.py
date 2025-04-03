@@ -19,6 +19,7 @@ class DatatablesTicketSerializer(serializers.ModelSerializer):
     assigned_to = serializers.SerializerMethodField()
     submitter = serializers.SerializerMethodField()
     created = serializers.SerializerMethodField()
+    modified = serializers.SerializerMethodField()
     due_date = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
     row_class = serializers.SerializerMethodField()
@@ -30,7 +31,7 @@ class DatatablesTicketSerializer(serializers.ModelSerializer):
         model = Ticket
         # fields = '__all__'
         fields = ('ticket', 'id', 'priority', 'title', 'queue', 'status',
-                  'created', 'due_date', 'assigned_to', 'submitter', 'row_class',
+                  'created', 'modified', 'due_date', 'assigned_to', 'submitter', 'row_class',
                   'time_spent', 'kbitem')
 
     def get_queue(self, obj):
@@ -44,6 +45,9 @@ class DatatablesTicketSerializer(serializers.ModelSerializer):
 
     def get_created(self, obj):
         return humanize.naturaltime(obj.created)
+
+    def get_modified(self, obj):
+        return humanize.naturaltime(obj.modified)
 
     def get_due_date(self, obj):
         return humanize.naturaltime(obj.due_date)
@@ -143,6 +147,7 @@ class PublicTicketListingSerializer(BaseTicketSerializer):
     ticket = serializers.SerializerMethodField()
     submitter = serializers.SerializerMethodField()
     created = serializers.SerializerMethodField()
+    modified = serializers.SerializerMethodField()
     due_date = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
     queue = serializers.SerializerMethodField()
@@ -153,7 +158,7 @@ class PublicTicketListingSerializer(BaseTicketSerializer):
         model = Ticket
         # fields = '__all__'
         fields = ('ticket', 'id', 'title', 'queue', 'status',
-                  'created', 'due_date', 'submitter', 'kbitem', 'secret_key')
+                  'created', 'modified', 'due_date', 'submitter', 'kbitem', 'secret_key')
 
     def get_queue(self, obj):
         return {"title": obj.queue.title, "id": obj.queue.id}
@@ -166,6 +171,9 @@ class PublicTicketListingSerializer(BaseTicketSerializer):
 
     def get_created(self, obj):
         return humanize.naturaltime(obj.created)
+
+    def get_modified(self, obj):
+        return humanize.naturaltime(obj.modified)
 
     def get_due_date(self, obj):
         return humanize.naturaltime(obj.due_date)

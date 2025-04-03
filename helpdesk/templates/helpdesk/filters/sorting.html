@@ -9,6 +9,9 @@
                 <option value='created'{% if query_params.sorting == "created"%} selected='selected'{% endif %}>
                     {% trans "Created" %}
                 </option>
+                <option value='modified'{% if query_params.sorting == "modified"%} selected='selected'{% endif %}>
+                {% trans "Modified" %}
+                </option>
                 <option value='title'{% if query_params.sorting == "title"%} selected='selected'{% endif %}>
                     {% trans "Title" %}
                 </option>
