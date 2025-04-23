@@ -6,7 +6,7 @@ See LICENSE for details.
 """
 
 # import base64
-from bs4 import BeautifulSoup
+import html2text
 from datetime import timedelta
 from django.conf import settings as django_settings
 from django.contrib.auth import get_user_model
@@ -639,7 +639,8 @@ def send_info_email(message_id: str, f: FollowUp, ticket: Ticket, context: dict,
     }
     if new:
         ticket.send(
-            {'submitter': ('newticket_submitter', context),
+            {
+             'submitter': ('newticket_submitter', context),
              'new_ticket_cc': ('newticket_cc', context),
              'ticket_cc': ('newticket_cc', context)},
             fail_silently=True,
@@ -649,7 +650,8 @@ def send_info_email(message_id: str, f: FollowUp, ticket: Ticket, context: dict,
         context.update(comment=f.comment)
         context.update(comment_user=f.user)
         ticket.send(
-            {'submitter': ('updated_submitter', context),
+            {
+             # 'submitter': ('updated_submitter', context),
              'assigned_to': ('updated_owner', context)},
             fail_silently=True,
             extra_headers=extra_headers,
@@ -730,16 +732,14 @@ def get_email_body_from_part_payload(part) -> str:
 
 
 def attempt_body_extract_from_html(message: str) -> str:
-    mail = BeautifulSoup(str(message), "html.parser")
-    beautiful_body = mail.find('body')
+    h2t = html2text.HTML2Text()
+    h2t.ignore_links = True
+    beautiful_body_text = h2t.handle(str(message))
     body = None
     full_body = None
-    if beautiful_body:
-        try:
-            body = beautiful_body.text
-            full_body = body
-        except AttributeError:
-            pass
+    if beautiful_body_text:
+        body = beautiful_body_text
+        full_body = body
     if not body:
         body = ""
     return body, full_body

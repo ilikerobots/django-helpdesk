@@ -4,7 +4,7 @@ celery
 email-reply-parser
 akismet
 markdown
-beautifulsoup4
+html2text
 lxml
 pytz
 pinax_teams

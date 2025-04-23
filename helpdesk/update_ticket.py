@@ -373,6 +373,9 @@ def update_ticket(
         files
     )
 
+    if new_status == Ticket.CLOSED_STATUS and ticket.submitter_email is not None:
+        messages_sent_to.add(ticket.submitter_email)
+
     template_staff, template_cc = get_template_staff_and_template_cc(reassigned, f)
     if ticket.assigned_to and (
         ticket.assigned_to.usersettings_helpdesk.email_on_ticket_change
