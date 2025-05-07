@@ -648,9 +648,11 @@ def send_info_email(message_id: str, f: FollowUp, ticket: Ticket, context: dict,
     else:
         context.update(comment=f.comment)
         context.update(comment_user=f.user)
-        ticket.send(
-            {'submitter': ('updated_submitter', context),
-             'assigned_to': ('updated_owner', context)},
+        ticket.send({
+            # MAH: disable sending updated_submitter when processing email
+            # 'submitter': ('updated_submitter', context),
+             'assigned_to': ('updated_owner', context)
+        },
             fail_silently=True,
             extra_headers=extra_headers,
         )
